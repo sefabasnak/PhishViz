@@ -99,10 +99,4 @@ Teknik Detaylar
 	•	Grafik: Matplotlib (grafiksel raporlama için)
 	•	Modern & Responsive Arayüz: Bootstrap
 
-Destek
-
-Eğer bir sorun yaşarsanız, aşağıdaki kanallardan yardım alabilirsiniz:
-	•	GitHub Sorun Takip Sistemi: Buraya Tıklayın
-	•	E-posta: support@example.com
-
 © 2025 PhishViz. Tüm Hakları Saklıdır.

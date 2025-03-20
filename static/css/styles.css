@@ -1,0 +1,498 @@
+/* static/css/styles.css */
+
+/* CSS Değişkenleri - Koyu Tema */
+:root {
+  --primary-color: #ffffff; /* Beyaz Metin ve Vurgu */
+  --secondary-color: #000000; /* Ana Arka Plan Rengi (Tamamen Siyah) */
+  --navbar-bg: #000000; /* Navbar Arka Plan Rengi */
+  --navbar-border: #ffffff; /* Navbar Kenarlık Rengi */
+  --card-bg: #000000; /* Kart Arka Plan Rengi */
+  --table-bg: #1e1e1e; /* Tablolar için Arka Plan */
+  --table-header-bg: #333333; /* Tablo Başlık Arka Plan */
+  --alert-bg: #ff4d4d; /* Alert Arka Plan */
+  --footer-bg: #000000; /* Footer Arka Plan */
+  --link-hover-color: #ffcc00; /* Link Hover Rengi */
+  --popup-bg: #333333; /* Leaflet Pop-up Arka Plan */
+  --popup-text: #ffffff; /* Leaflet Pop-up Metin Rengi */
+  --button-primary-bg: #333333; /* Buton Arka Plan Rengi */
+  --button-primary-hover-bg: #555555; /* Buton Hover Rengi */
+  --button-warning-bg: #ffca2c; /* Buton Uyarı Arka Plan */
+  --button-warning-hover-bg: #e6b800; /* Buton Uyarı Hover Rengi */
+  --button-success-bg: #28a745; /* Buton Başarı Arka Plan */
+  --button-success-hover-bg: #218838; /* Buton Başarı Hover Rengi */
+  --text-color: #ffffff; /* Genel Metin Rengi */
+  --heading-color: #ffffff; /* Başlık Rengi */
+  --heading-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7); /* Başlık Gölgesi */
+  --border-color: #444444; /* Kenarlık Rengi */
+  --shadow-color: rgba(0, 0, 0, 0.5); /* Gölge Rengi */
+  --animation-duration: 0.3s; /* Genel Animasyon Süresi */
+  --animation-ease: ease; /* Genel Animasyon Easing */
+
+  /* EKLENDİ: Neon yeşil ve benzeri tonlar */
+  --neon-green: #00ff99;
+}
+
+/* Genel Stil Ayarları */
+body {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  font-family: 'Hack', monospace;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Navbar */
+.navbar {
+  background-color: var(--navbar-bg) !important;
+}
+
+.navbar a.nav-link {
+  color: var(--primary-color) !important;
+}
+
+.navbar a.nav-link:hover, .navbar a.nav-link:focus {
+  color: var(--link-hover-color) !important;
+}
+
+/* Başlıklar */
+h1, h2, h3, h4, h5 {
+  font-family: 'Hack', monospace;
+  color: var(--heading-color);
+  text-shadow: var(--heading-shadow);
+  animation: fadeInDown var(--animation-duration) var(--animation-ease);
+}
+
+/* Linkler */
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color var(--animation-duration) var(--animation-ease);
+}
+
+a:hover, a:focus {
+  color: var(--link-hover-color);
+  text-decoration: underline;
+}
+
+/* Kartlar */
+.card {
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  transition: transform var(--animation-duration) var(--animation-ease), box-shadow var(--animation-duration) var(--animation-ease);
+  animation: fadeInUp var(--animation-duration) var(--animation-ease);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
+}
+
+/* Gradient Kart */
+.card-gradient {
+  background: linear-gradient(135deg, #333, #111);
+  border: none;
+  border-radius: 8px;
+}
+
+/* Kart Başlık ve Metin */
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.card-text {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+/* Kartların Önem Derecesine Göre Renklendirilmesi */
+.card-high {
+  border-left: 5px solid #ff0000; /* Kırmızı - Yüksek Önem */
+}
+
+.card-medium {
+  border-left: 5px solid #ffa500; /* Turuncu - Orta Önem */
+}
+
+.card-low {
+  border-left: 5px solid #00ff00; /* Yeşil - Düşük Önem */
+}
+
+/* Tablolar */
+.table {
+  background-color: var(--table-bg);
+  color: var(--primary-color);
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--border-color);
+  animation: fadeIn var(--animation-duration) var(--animation-ease);
+}
+
+.table thead {
+  background-color: var(--table-header-bg);
+  color: var(--primary-color);
+}
+
+.table th, .table td {
+  padding: 0.75rem;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #2a2a2a;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  animation: fadeIn var(--animation-duration) var(--animation-ease);
+}
+
+/* Butonlar */
+.btn-primary {
+  background-color: var(--button-primary-bg);
+  border-color: var(--button-primary-bg);
+  color: var(--primary-color);
+  transition: background-color var(--animation-duration) var(--animation-ease),
+              border-color var(--animation-duration) var(--animation-ease),
+              transform var(--animation-duration) var(--animation-ease);
+  animation: fadeIn var(--animation-duration) var(--animation-ease);
+}
+
+.btn-primary:hover, .btn-primary:focus {
+  background-color: var(--button-primary-hover-bg);
+  border-color: var(--button-primary-hover-bg);
+  transform: translateY(-2px);
+}
+
+.btn-warning {
+  background-color: var(--button-warning-bg);
+  border-color: var(--button-warning-bg);
+  color: #000000;
+  transition: background-color var(--animation-duration) var(--animation-ease),
+              border-color var(--animation-duration) var(--animation-ease),
+              transform var(--animation-duration) var(--animation-ease);
+  animation: fadeIn var(--animation-duration) var(--animation-ease);
+}
+
+.btn-warning:hover, .btn-warning:focus {
+  background-color: var(--button-warning-hover-bg);
+  border-color: var(--button-warning-hover-bg);
+  transform: translateY(-2px);
+}
+
+.btn-success {
+  background-color: var(--button-success-bg);
+  border-color: var(--button-success-bg);
+  color: var(--primary-color);
+  transition: background-color var(--animation-duration) var(--animation-ease),
+              border-color var(--animation-duration) var(--animation-ease),
+              transform var(--animation-duration) var(--animation-ease);
+  animation: fadeIn var(--animation-duration) var(--animation-ease);
+}
+
+.btn-success:hover, .btn-success:focus {
+  background-color: var(--button-success-hover-bg);
+  border-color: var(--button-success-hover-bg);
+  transform: translateY(-2px);
+}
+
+.btn-close {
+  filter: invert(1);
+}
+
+.btn {
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  animation: fadeIn var(--animation-duration) var(--animation-ease);
+}
+
+/* static/css/styles.css */
+
+/* Leaflet Harita Konteyneri */
+.leaflet-container {
+    height: 400px; /* Harita yüksekliği */
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px var(--shadow-color);
+    transition: box-shadow var(--animation-duration) var(--animation-ease);
+    animation: fadeIn var(--animation-duration) var(--animation-ease);
+}
+
+/* Responsive Tasarım için */
+@media (max-width: 768px) {
+    .leaflet-container {
+        height: 300px; /* Daha küçük ekranlar için yüksekliği azalt */
+    }
+}
+
+@media (max-width: 576px) {
+    .leaflet-container {
+        height: 250px; /* En küçük ekranlar için yüksekliği daha da azalt */
+    }
+}
+
+.leaflet-container:hover {
+  box-shadow: 0 8px 16px var(--shadow-color);
+}
+
+.leaflet-popup-content {
+  color: var(--popup-text);
+  background-color: var(--popup-bg);
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.leaflet-popup-content a {
+  color: var(--link-hover-color);
+}
+
+.leaflet-popup-content a:hover, .leaflet-popup-content a:focus {
+  color: var(--primary-color);
+}
+
+/* static/css/styles.css */
+
+/* Grafik Konteynerleri */
+.chart-container {
+    position: relative;
+    margin: auto;
+    height: 400px; /* Grafik yüksekliği */
+    width: 100%;
+    max-width: 800px; /* Maksimum genişlik ayarı */
+    background-color: #1e1e1e; /* Grafiğin arka plan rengini koyu yap */
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 4px 8px var(--shadow-color);
+    transition: box-shadow var(--animation-duration) var(--animation-ease);
+    animation: fadeIn var(--animation-duration) var(--animation-ease);
+}
+
+.chart-container:hover {
+    box-shadow: 0 8px 16px var(--shadow-color);
+}
+
+.chart-container canvas {
+    background-color: transparent; /* Arka planı şeffaf yap */
+    border-radius: 8px;
+}
+
+/* Responsive Tasarım için */
+@media (max-width: 992px) {
+    .chart-container {
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 768px) {
+    .chart-container {
+        height: 300px; /* Daha küçük ekranlar için grafik yüksekliği */
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .chart-container {
+        height: 250px; /* En küçük ekranlar için grafik yüksekliği */
+        max-width: 100%;
+    }
+}
+
+.chart-container {
+    height: 400px; /* Grafiklerin boyutunu sabit tut */
+    max-width: 100%;
+  }
+}
+
+/* Alertlar */
+.alert {
+  border-radius: 4px;
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  background-color: var(--alert-bg);
+  color: var(--primary-color);
+  animation: fadeIn var(--animation-duration) var(--animation-ease);
+}
+
+.alert-success {
+  background-color: var(--button-success-bg);
+  color: var(--primary-color);
+}
+
+.alert-danger {
+  background-color: #dc3545;
+  color: var(--primary-color);
+}
+
+.alert-warning {
+  background-color: #ffc107;
+  color: #000000;
+}
+
+.alert-info {
+  background-color: #17a2b8;
+  color: var(--primary-color);
+}
+
+/* Footer */
+.footer {
+  background-color: var(--footer-bg);
+  color: var(--primary-color);
+  padding: 1rem 0;
+  text-align: center;
+  border-top: 2px solid var(--navbar-border);
+  animation: fadeInUp var(--animation-duration) var(--animation-ease);
+}
+
+.footer p {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* Form ve Giriş Alanları */
+.form-control {
+  background-color: #2c2c2c;
+  color: var(--primary-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  transition: border-color var(--animation-duration) var(--animation-ease);
+  padding: 0.5rem 1rem;
+  animation: fadeIn var(--animation-duration) var(--animation-ease);
+}
+
+.form-control:focus {
+  border-color: #333333;
+  box-shadow: none;
+}
+
+.form-control::placeholder {
+  color: #cccccc;
+}
+
+/* Ekstra Hover Efektleri */
+.navbar-nav .nav-item .nav-link:hover, .navbar-nav .nav-item .nav-link:focus {
+  text-decoration: underline;
+}
+
+.card-body:hover, .card-body:focus-within {
+  background-color: #333333;
+}
+
+/* Outline Primary Buton */
+.btn-outline-primary {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-outline-primary:hover, .btn-outline-primary:focus {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+/* Modal Stil Ayarları */
+.show-modal {
+  display: block;
+  background-color: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  z-index: 1050;
+  animation: fadeIn var(--animation-duration) var(--animation-ease);
+}
+
+.modal-content {
+  background-color: var(--card-bg);
+  margin: 10% auto;
+  padding: 20px;
+  border: 2px solid var(--navbar-border);
+  width: 80%;
+  border-radius: 8px;
+  position: relative;
+  animation: slideInDown var(--animation-duration) var(--animation-ease);
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+/* Animasyon Tanımlamaları */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInDown {
+  from { opacity: 0; transform: translateY(-100px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* EKLENDİ: Neon Glitch / Animasyonu */
+@keyframes textGlitch {
+  0% { text-shadow: 0 0 3px #ff00c1, 0 0 5px var(--neon-green); }
+  25% { text-shadow: 0 0 5px var(--neon-green), 0 0 10px var(--neon-green); }
+  50% { text-shadow: 0 0 3px #ff00c1, 0 0 3px var(--neon-green); }
+  75% { text-shadow: 0 0 10px #ff00c1, 0 0 5px var(--neon-green); }
+  100% { text-shadow: 0 0 3px #ff00c1, 0 0 3px var(--neon-green); }
+}
+
+.neon-glitch {
+  animation: textGlitch 2s infinite;
+}
+
+/* Logo Stil Ayarları */
+.logo-img {
+  width: 100px; /* Logonun genişliğini istediğiniz gibi ayarlayın */
+  height: auto; /* Yüksekliği otomatik olarak ayarlar */
+  object-fit: contain; /* Logonun orantılı olarak sığmasını sağlar */
+  background-color: rgba(255, 255, 255, 0.8); /* Beyaz yarı saydam arka plan */
+  padding: 5px; /* Logonun etrafında boşluk */
+  border-radius: 8px; /* Hafif yuvarlak köşeler */
+  box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Hafif gölge efekti */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.logo-img:hover, .logo-img:focus {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(0,0,0,0.7);
+}
+
+/* Responsive Logo */
+@media (max-width: 768px) {
+  .logo-img {
+    width: 80px;
+  }
+}
+
+@media (max-width: 576px) {
+  .logo-img {
+    width: 60px;
+  }
+}

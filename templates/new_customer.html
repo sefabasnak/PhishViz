@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Yeni Müşteri Ekle{% endblock %}
+
+{% block content %}
+<h1>Yeni Müşteri Ekle</h1>
+<form method="POST" action="{{ url_for('add_customer') }}" enctype="multipart/form-data">
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label for="customer_name" class="form-label">Müşteri Adı (zorunlu):</label>
+      <input type="text" class="form-control" id="customer_name" name="customer_name" required>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="scenario" class="form-label">Senaryo Bilgisi (opsiyonel):</label>
+      <input type="text" class="form-control" id="scenario" name="scenario">
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="domain" class="form-label">Kullanılan Alan Adı (opsiyonel):</label>
+      <input type="text" class="form-control" id="domain" name="domain" placeholder="example.com">
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="logo" class="form-label">Müşteri Logosu (opsiyonel):</label>
+      <input type="file" class="form-control" id="logo" name="logo">
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Müşteri Ekle</button>
+  <a href="{{ url_for('index') }}" class="btn btn-secondary">İptal</a>
+</form>
+{% endblock %}

@@ -1,0 +1,50 @@
+<!-- templates/create_report.html -->
+{% extends "base.html" %}
+
+{% block title %}Rapor Oluştur{% endblock %}
+
+{% block content %}
+<h2>Dinamik Rapor Oluştur</h2>
+<form method="POST" action="{{ url_for('create_report') }}">
+    <div class="mb-3">
+        <label for="report_title" class="form-label">Rapor Başlığı</label>
+        <input type="text" class="form-control" id="report_title" name="report_title" required>
+    </div>
+    <div class="mb-3">
+        <label for="customer_name" class="form-label">Müşteri</label>
+        <select class="form-select" id="customer_name" name="customer_name" required>
+            {% for customer in customers %}
+                <option value="{{ customer.id }}">{{ customer.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Rapor İçeriği</label>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="mail_sent" id="mail_sent" name="metrics">
+            <label class="form-check-label" for="mail_sent">
+                Mail Gönderilen Kişiler
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="mail_read" id="mail_read" name="metrics">
+            <label class="form-check-label" for="mail_read">
+                Maili Okuyan Kişiler
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="link_clicked" id="link_clicked" name="metrics">
+            <label class="form-check-label" for="link_clicked">
+                Linke Tıklayan Kişiler
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="data_leaks" id="data_leaks" name="metrics">
+            <label class="form-check-label" for="data_leaks">
+                Veri İhlali Yapan Kişiler
+            </label>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Rapor Oluştur</button>
+</form>
+{% endblock %}

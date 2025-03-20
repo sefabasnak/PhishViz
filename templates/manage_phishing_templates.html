@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block title %}Phishing Şablonları Yönet{% endblock %}
+
+{% block content %}
+<h1>Phishing Şablonları Yönet</h1>
+
+<!-- Şablon Ekleme Formu -->
+<form method="POST" action="{{ url_for('phishing_templates') }}">
+    <div class="mb-3">
+        <label for="template_name" class="form-label">Şablon Adı</label>
+        <input type="text" class="form-control" id="template_name" name="template_name" required>
+    </div>
+
+    <div id="pages-container">
+        <h3>Sayfalar</h3>
+        <button type="button" class="btn btn-secondary mb-3" onclick="addPage()">Sayfa Ekle</button>
+        <!-- İlk Sayfa -->
+        <div class="page" data-page-number="1">
+            <h4>Sayfa 1</h4>
+            <textarea class="form-control code-editor" name="page_content_1" rows="10"></textarea>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Kaydet</button>
+</form>
+
+<!-- Şablon Listesi -->
+<hr>
+<h2>Mevcut Şablonlar</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Şablon Adı</th>
+            <th>Oluşturulma Tarihi</th>
+            <th>Güncelleme Tarihi</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for template in templates_list %}
+        <tr>
+            <td>{{ template.template_name }}</td>
+            <td>{{ template.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+            <td>{{ template.updated_at.strftime('%Y-%m-%d %H:%M') }}</td>
+            <td>
+                <a href="{{ url_for('phishing_template_edit', template_id=template.id) }}" class="btn btn-sm btn-warning">Düzenle</a>
+                <a href="{{ url_for('phishing_template_preview', template_id=template.id) }}" class="btn btn-sm btn-info" target="_blank">Önizle</a>
+                <a href="{{ url_for('download_template', template_id=template.id) }}" class="btn btn-sm btn-success">İndir</a>
+                <form method="POST" action="{{ url_for('delete_template', template_id=template.id) }}" style="display:inline;" onsubmit="return confirm('Şablonu silmek istediğinize emin misiniz?');">
+                    <button type="submit" class="btn btn-sm btn-danger">Sil</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- JavaScript: Dinamik Sayfa Ekleme -->
+<script>
+    let pageCount = 1;
+
+    function addPage() {
+        pageCount += 1;
+        const container = document.getElementById('pages-container');
+        const pageDiv = document.createElement('div');
+        pageDiv.classList.add('page');
+        pageDiv.setAttribute('data-page-number', pageCount);
+        pageDiv.innerHTML = `
+            <h4>Sayfa ${pageCount}</h4>
+            <textarea class="form-control code-editor" name="page_content_${pageCount}" rows="10"></textarea>
+            <button type="button" class="btn btn-danger mt-2" onclick="removePage(this)">Sayfayı Kaldır</button>
+        `;
+        container.appendChild(pageDiv);
+        initializeCodeEditor();
+    }
+
+    function removePage(button) {
+        const pageDiv = button.parentElement;
+        pageDiv.remove();
+    }
+
+    // CodeMirror veya başka bir kod editörü entegrasyonu için
+    function initializeCodeEditor() {
+        const editors = document.querySelectorAll('.code-editor');
+        editors.forEach(editor => {
+            if (!editor.classList.contains('initialized')) {
+                // CodeMirror örneği
+                CodeMirror.fromTextArea(editor, {
+                    mode: 'htmlmixed',
+                    lineNumbers: true,
+                    theme: 'monokai'
+                });
+                editor.classList.add('initialized');
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        initializeCodeEditor();
+    });
+</script>
+
+<!-- CodeMirror CSS ve JS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/theme/monokai.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/htmlmixed/htmlmixed.min.js"></script>
+{% endblock %}

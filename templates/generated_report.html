@@ -1,0 +1,27 @@
+<!-- templates/generated_report.html -->
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<h2>{{ title }}</h2>
+<h4>Müşteri: {{ customer.name }}</h4>
+<ul class="list-group">
+    {% for key, value in data.items() %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{ key }}
+            <span class="badge bg-primary rounded-pill">{{ value }}</span>
+        </li>
+    {% endfor %}
+</ul>
+
+<!-- Raporu Dışa Aktarma Butonları -->
+<div class="mt-4">
+    <a href="{{ url_for('export_pdf', report_title=title, customer_id=customer.id) }}" class="btn btn-danger">
+        <i class="fas fa-file-pdf me-2"></i> PDF Olarak İndir
+    </a>
+    <a href="{{ url_for('export_excel', report_title=title, customer_id=customer.id) }}" class="btn btn-success">
+        <i class="fas fa-file-excel me-2"></i> Excel Olarak İndir
+    </a>
+</div>
+{% endblock %}

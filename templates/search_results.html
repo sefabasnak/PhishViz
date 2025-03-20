@@ -1,0 +1,30 @@
+<!-- templates/search_results.html -->
+{% extends "base.html" %}
+
+{% block title %}Arama Sonuçları{% endblock %}
+
+{% block content %}
+<h2>Arama Sonuçları: {{ request.args.get('ip') }}</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>IP Adresi</th>
+            <th>Konum</th>
+            <th>Koordinatlar</th>
+            <th>Veri İhlali</th>
+            <th>Test</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for report in reports %}
+        <tr>
+            <td>{{ report.ip_address }}</td>
+            <td>{{ report.location }}</td>
+            <td>{{ report.coords_lat }}, {{ report.coords_lon }}</td>
+            <td>{{ 'Evet' if report.data_leak else 'Hayır' }}</td>
+            <td>{{ report.test.id }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

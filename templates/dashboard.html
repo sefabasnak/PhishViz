@@ -1,0 +1,310 @@
+<!-- templates/dashboard.html -->
+{% extends "base.html" %}
+{% block title %}{{ customer.name }} - Dashboard{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <h1 class="text-center neon-glitch mb-4">{{ customer.name }} - Dashboard</h1>
+
+  <!-- Müşteri Detayı (opsiyonel) -->
+  <div class="d-flex align-items-center mb-4">
+    {% if customer.logo %}
+      <img src="{{ url_for('static', filename=customer.logo) }}" alt="Logo" class="me-3 logo-img">
+    {% endif %}
+    <div>
+      {% if customer.scenario %}
+        <p class="mb-1"><strong>Senaryo:</strong> {{ customer.scenario }}</p>
+      {% endif %}
+      {% if customer.domain %}
+        <p class="mb-0"><strong>Alan Adı:</strong> {{ customer.domain }}</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- İstatistik Kartları (Gradyanlı Arkaplan + İkonlar) -->
+  <div class="row">
+    <!-- Mail Gönderilen (A) Toplam - Yüksek Önem -->
+    <div class="col-md-4 mb-4">
+      <div class="card card-gradient card-high h-100">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">
+            <i class="fas fa-envelope me-2"></i> Mail Gönderilen (A) Toplam
+          </h5>
+          <p class="card-text display-6 mt-auto">{{ stats.mail_gonderilen_count }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Maili Okuyan (B) - Orta Önem -->
+    <div class="col-md-4 mb-4">
+      <div class="card card-gradient card-medium h-100">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">
+            <i class="fas fa-eye me-2"></i> Maili Okuyan (B)
+          </h5>
+          <p class="card-text display-6 mt-auto">{{ stats.mail_okuyan_count }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Linke Tıklayan (D) - Orta Önem -->
+    <div class="col-md-4 mb-4">
+      <div class="card card-gradient card-medium h-100">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">
+            <i class="fas fa-mouse-pointer me-2"></i> Linke Tıklayan (D)
+          </h5>
+          <p class="card-text display-6 mt-auto">{{ stats.linke_tiklayan_count }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Veri İhlali (E) - Düşük Önem -->
+    <div class="col-md-4 mb-4">
+      <div class="card card-gradient card-low h-100">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">
+            <i class="fas fa-exclamation-triangle me-2"></i> Veri İhlali (E)
+          </h5>
+          <p class="card-text display-6 mt-auto">{{ stats.veri_ihlali_count }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kaç Kere Çalıştırıldı (F) - Orta Önem -->
+    <div class="col-md-4 mb-4">
+      <div class="card card-gradient card-medium h-100">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">
+            <i class="fas fa-sync me-2"></i> Kaç Kere Çalıştırıldı (F)
+          </h5>
+          <p class="card-text display-6 mt-auto">{{ stats.kac_kere_calistirildi_sum }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rapor Dışa Aktarma Butonları -->
+  <div class="d-flex justify-content-end mb-4">
+    <a href="{{ url_for('export_pdf', customer_id=customer.id) }}" class="btn btn-danger me-3">
+      <i class="fas fa-file-pdf me-2"></i> PDF Olarak İndir
+    </a>
+    <a href="{{ url_for('export_excel', customer_id=customer.id) }}" class="btn btn-success">
+      <i class="fas fa-file-excel me-2"></i> Excel Olarak İndir
+    </a>
+  </div>
+
+  <hr class="mb-5">
+
+  <!-- IP Lokasyon Haritası -->
+  <div class="my-5">
+    <h2 class="mt-4 mb-3">IP Geolocation Haritası ({{ customer.name }})</h2>
+    <div id="dashboard-map" class="leaflet-container"></div>
+  </div>
+
+  <!-- IP Lokasyon Dağılımı Grafikleri (Pie Charts) -->
+  <hr class="my-5">
+
+  <!-- Pie Grafiği Tam Genişlikte -->
+  <div class="my-5">
+    <h2 class="mt-4 mb-3">IP Lokasyon Dağılımı - İl Bazında (En Çok IP Alan İlk 10 İl)</h2>
+    <div class="chart-container mb-4">
+      <canvas id="ipDistributionCityPieChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Diğer Grafikler -->
+  <div class="my-5">
+    <h2 class="mt-4 mb-3">Mail Okuma Saat Dağılımı</h2>
+    <div class="chart-container mb-4">
+      <canvas id="readTimeChart"></canvas>
+    </div>
+
+    <h2 class="mt-4 mb-3">Veri İhlali & Kaç Kere Çalıştırıldı</h2>
+    <div class="chart-container mb-4">
+      <canvas id="dataLeakChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Ana Sayfa ve Yeni Test Yükle Butonları -->
+  <div class="mt-4 d-flex justify-content-start">
+    <a href="{{ url_for('index') }}" class="btn btn-primary me-3">
+      <i class="fas fa-home me-2"></i> Ana Sayfa
+    </a>
+    <a href="{{ url_for('upload', customer_id=customer.id) }}" class="btn btn-warning">
+      <i class="fas fa-file-upload me-2"></i> Yeni Test Yükle
+    </a>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<!-- Chart.js Kütüphanesi -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  // Debug: Verilerin doğru şekilde alındığını kontrol et
+  console.log("City Labels:", {{ city_labels|tojson }});
+  console.log("City Values:", {{ city_values|tojson }});
+  console.log("Read Hour Labels:", {{ read_hour_labels|tojson }});
+  console.log("Read Hour Values:", {{ read_hour_values|tojson }});
+  console.log("Leak Labels:", {{ leak_labels|tojson }});
+  console.log("Leak Values:", {{ leak_values|tojson }});
+
+  // 1) İl Bazında IP Dağılımı (Pie Chart - En Çok IP Alan İlk 10 İl)
+  const cityLabels = {{ city_labels|tojson }};
+  const cityValues = {{ city_values|tojson }};
+
+  // Renk paleti
+  const cityColors = [
+      '#4dc9f6',
+      '#f67019',
+      '#f53794',
+      '#537bc4',
+      '#acc236',
+      '#166a8f',
+      '#00a950',
+      '#58595b',
+      '#8549ba',
+      '#e7e9ed'
+  ];
+
+  const ctxCityPie = document.getElementById('ipDistributionCityPieChart').getContext('2d');
+  new Chart(ctxCityPie, {
+      type: 'pie',
+      data: {
+          labels: cityLabels,
+          datasets: [{
+              data: cityValues,
+              backgroundColor: cityColors.slice(0, cityLabels.length),
+              borderColor: '#ffffff',
+              borderWidth: 1
+          }]
+      },
+      options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+              legend: {
+                  position: 'right',
+                  labels: {
+                      color: 'white'
+                  }
+              },
+              tooltip: {
+                  callbacks: {
+                      label: function(context) {
+                          const label = context.label || '';
+                          const value = context.parsed || 0;
+                          const total = context.chart._metasets[context.datasetIndex].total;
+                          const percentage = ((value / total) * 100).toFixed(2) + '%';
+                          return `${label}: ${value} (${percentage})`;
+                      }
+                  }
+              }
+          }
+      }
+  });
+
+  // 2) Mail Okuma Saat Dağılımı (Bar Chart)
+  const readHourLabels = {{ read_hour_labels|tojson }};
+  const readHourValues = {{ read_hour_values|tojson }};
+
+  const ctxReadTime = document.getElementById('readTimeChart').getContext('2d');
+  new Chart(ctxReadTime, {
+    type: 'bar',
+    data: {
+      labels: readHourLabels,
+      datasets: [{
+        label: 'Okuma Sayısı',
+        data: readHourValues,
+        backgroundColor: '#ffc107'
+      }]
+    },
+    options: {
+      indexAxis: 'y', // Yatay bar
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          ticks: { color: 'white' },
+          grid: { color: '#555' }
+        },
+        y: {
+          ticks: { color: 'white' },
+          grid: { color: '#555' }
+        }
+      },
+      plugins: {
+        legend: {
+          labels: { color: 'white' }
+        }
+      }
+    }
+  });
+
+  // 3) Veri İhlali & Kaç Kere Çalıştırıldı (Bar Chart)
+  const leakLabels = {{ leak_labels|tojson }};
+  const leakValues = {{ leak_values|tojson }};
+  const ctxDataLeak = document.getElementById('dataLeakChart').getContext('2d');
+  new Chart(ctxDataLeak, {
+    type: 'bar',
+    data: {
+      labels: leakLabels,
+      datasets: [{
+        label: 'Kaç Kere Çalıştırıldı',
+        data: leakValues,
+        backgroundColor: '#dc3545'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          ticks: { color: 'white', autoSkip: false },
+          grid: { color: '#555' }
+        },
+        y: {
+          ticks: { color: 'white' },
+          grid: { color: '#555' }
+        }
+      },
+      plugins: {
+        legend: {
+          labels: { color: 'white' }
+        }
+      }
+    }
+  });
+</script>
+
+<!-- Leaflet Haritası + MarkerCluster -->
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<script>
+  // Debug: Harita verilerini kontrol et
+  console.log("Location Data for Map:", {{ location_data|tojson }});
+
+  const dashboardMap = L.map('dashboard-map').setView([20, 0], 2);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+  }).addTo(dashboardMap);
+
+  const dashboardMarkers = L.markerClusterGroup();
+  const locationData = {{ location_data|tojson }};
+
+  locationData.forEach(function(item) {
+    const coord = item.coords;
+    const location = item.location || "Unknown";
+    if (coord[0] !== 0 && coord[1] !== 0) {
+      const marker = L.marker(coord);
+      marker.bindPopup(`<strong>Konum:</strong> ${location}<br><strong>Koordinatlar:</strong> ${coord[0]}, ${coord[1]}`);
+      dashboardMarkers.addLayer(marker);
+    }
+  });
+
+  dashboardMap.addLayer(dashboardMarkers);
+</script>
+{% endblock %}

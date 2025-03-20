@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ customer.name }} Raporu</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333333;
+        }
+
+        h1, h2, h3, h4 {
+            color: #2F4F4F;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+            table-layout: fixed;
+            word-wrap: break-word;
+            page-break-inside: auto;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            padding: 6px;
+            text-align: left;
+            font-size: 9px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        img {
+            display: block;
+            margin: 0 auto 15px auto;
+            max-width: 100%;
+            height: auto;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: #ccc;
+            margin: 15px 0;
+        }
+
+        .page {
+            page-break-after: always;
+        }
+
+        @media print {
+            .page {
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ customer.name }} - Rapor</h1>
+    <p><strong>Senaryo:</strong> {{ customer.scenario }}</p>
+    <p><strong>Domain:</strong> {{ customer.domain }}</p>
+    {% if encoded_logo %}
+    <img src="data:image/png;base64,{{ encoded_logo }}" alt="{{ customer.name }} Logo" width="200">
+    {% endif %}
+
+    <hr>
+
+    <h2>Genel Özet</h2>
+    <table>
+        <tr>
+            <th>Mail Gönderilen Kişiler</th>
+            <td>{{ total_mail_sent }}</td>
+        </tr>
+        <tr>
+            <th>Maili Okuyan Kişiler</th>
+            <td>{{ total_mail_read }}</td>
+        </tr>
+        <tr>
+            <th>Linke Tıklayan Kişiler</th>
+            <td>{{ total_link_clicked }}</td>
+        </tr>
+        <tr>
+            <th>Veri İhlali Yapan Kişiler</th>
+            <td>{{ total_data_leaks }}</td>
+        </tr>
+        <tr>
+            <th>Kaç Kere Çalıştırıldığı</th>
+            <td>{{ total_exec_count }}</td>
+        </tr>
+    </table>
+
+    <h2>İl Bazında IP Dağılımı</h2>
+    <img src="data:image/png;base64,{{ city_pie_chart }}" alt="İl Bazında IP Dağılımı Grafiği" style="width: 100%; max-width: 500px; height: auto;">
+
+    <h2>Mail Okuma Saat Dağılımı</h2>
+    <img src="data:image/png;base64,{{ read_time_chart }}" alt="Mail Okuma Saat Dağılımı Grafiği" style="width: 100%; max-width: 500px; height: auto;">
+
+    <h2>Veri İhlali & Kaç Kere Çalıştırıldı</h2>
+    <img src="data:image/png;base64,{{ data_leak_chart }}" alt="Veri İhlali & Kaç Kere Çalıştırıldı Grafiği" style="width: 100%; max-width: 500px; height: auto;">
+
+    <hr>
+
+    {% for test in tests %}
+    <div class="page">
+        <h3>Test ID: {{ test.id }}</h3>
+        <p><strong>Yükleme Zamanı:</strong> {{ test.upload_time.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+        <p><strong>Mail Gönderilen Kişiler:</strong> {{ test.mail_sent }}</p>
+        <p><strong>Maili Okuyan Kişiler:</strong> {{ test.mail_read }}</p>
+        <p><strong>Linke Tıklayan Kişiler:</strong> {{ test.link_clicked }}</p>
+        <p><strong>Veri İhlali Yapan Kişiler:</strong> {{ test.data_leaks }}</p>
+        <p><strong>Kaç Kere Çalıştırıldığı:</strong> {{ test.exec_count }}</p>
+
+        <h4>Raporlar:</h4>
+        {% set test_reports = reports | selectattr('test_id', 'equalto', test.id) | rejectattr('location', 'equalto', 'Unknown') | list %}
+        {% if test_reports %}
+            {% set chunk_size = 20 %}
+            {% for report_chunk in test_reports|batch(chunk_size, fill_with=None) %}
+                {% if report_chunk %}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 15%;">IP Adresi</th>
+                                <th style="width: 25%;">Konum</th>
+                                <th style="width: 10%;">Enlem</th>
+                                <th style="width: 10%;">Boylam</th>
+                                <th style="width: 10%;">Veri İhlali</th>
+                                <th style="width: 20%;">Veri İhlali Yapan Kişi</th>
+                                <th style="width: 10%;">Mail Okuma Saati</th>
+                                <th style="width: 10%;">Satır Bazında Exec Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for report in report_chunk %}
+                                {% if report %}
+                                <tr>
+                                    <td>{{ report.ip_address }}</td>
+                                    <td>{{ report.location }}</td>
+                                    <td>{{ report.coords_lat }}</td>
+                                    <td>{{ report.coords_lon }}</td>
+                                    <td>{{ 'Evet' if report.data_leak else 'Hayır' }}</td>
+                                    <td>{{ report.data_leak_user if report.data_leak else 'N/A' }}</td>
+                                    <td>{{ report.mail_read_time.strftime('%d.%m.%Y - %H:%M:%S') if report.mail_read_time else 'Belirtilmemiş' }}</td>
+                                    <td>{{ report.exec_count }}</td>
+                                </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <p>Bu test için geçerli rapor bulunmamaktadır.</p>
+        {% endif %}
+    </div>
+    {% endfor %}
+</body>
+</html>

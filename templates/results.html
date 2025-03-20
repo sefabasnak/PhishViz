@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}{{ customer_name }} - Test Sonuçları{% endblock %}
+
+{% block content %}
+<h1 class="text-center">{{ customer_name }} - Test Sonuçları</h1>
+
+{% if customer.logo %}
+  <img src="{{ customer.logo }}" alt="Logo" width="50" height="50" style="object-fit: contain;">
+{% endif %}
+{% if customer.scenario %}
+  <p><strong>Senaryo:</strong> {{ customer.scenario }}</p>
+{% endif %}
+{% if customer.domain %}
+  <p><strong>Alan Adı:</strong> {{ customer.domain }}</p>
+{% endif %}
+
+<hr>
+
+{% if data %}
+<div class="table-responsive">
+  <table class="table table-dark table-striped align-middle">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>A) Mail Gönderilen Kişiler</th>
+        <th>B) Maili Okuyan Kişiler</th>
+        <th>C) Mail Okuma Tarih ve Saati</th>
+        <th>D) IP</th>
+        <th>E) Veri İhlali Yapan</th>
+        <th>F) Kaç Kere</th>
+        <th>IP_Location</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in data %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ row.get('Mail Gönderilen Kişiler','') }}</td>
+        <td>{{ row.get('Maili Okuyan Kişiler','') }}</td>
+        <td>{{ row.get('Mail Okuma Tarih ve Saati','') }}</td>
+        <td>{{ row.get('Linke Tıklayan Kişiler','') }}</td>
+        <td>{{ row.get('Veri İhlali Yapan Kişiler','') }}</td>
+        <td>{{ row.get('Kaç Kere Çalıştırıldığı','') }}</td>
+        <td>{{ row.get('IP_Location','') }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p>Henüz test verisi yok.</p>
+{% endif %}
+
+<hr>
+<a href="{{ url_for('index') }}" class="btn btn-primary">Ana Sayfa</a>
+<a href="{{ url_for('dashboard', customer_name=customer_name) }}" class="btn btn-success">Dashboard</a>
+{% endblock %}

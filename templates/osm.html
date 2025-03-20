@@ -1,0 +1,16 @@
+<!--osm.html-->
+{% extends "base.html" %}
+{% block title %}OSM Example{% endblock %}
+
+{% block content %}
+<h1>OSM</h1>
+<p><strong>Building:</strong> {{ building }}</p>
+<p><strong>Architect:</strong> {{ architect }}</p>
+<p><strong>Website:</strong> <a href="{{ website }}">{{ website }}</a></p>
+
+<h2>Stephansdom Details</h2>
+<p><strong>English Name:</strong> {{ stephansdom_name_en }}</p>
+<p><strong>Address:</strong> {{ stephansdom_address }}</p>
+<p><strong>Building:</strong> {{ stephansdom_building }}</p>
+<p><strong>Denomination:</strong> {{ stephansdom_denomination }}</p>
+{% endblock %}

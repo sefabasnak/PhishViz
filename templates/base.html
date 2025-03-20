@@ -1,0 +1,180 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+      <title>{{ config['APPLICATION_TITLE'] }}</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Fonts: Hack -->
+  <link href="https://fonts.googleapis.com/css2?family=Hack&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+  <!-- Lightbox CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css"/>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <!-- MarkerCluster CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"/>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-pVfHmNqTRaqD7TgxWoqX1lFZ5Xx9ZQxhq6Gq1qcmOw4Vz9HJnHptCzXj+qO0t0+bM8+gh6Nmi/J6Pr4FtXiUHw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  {% block head_scripts %}
+  <!-- Chart.js (İhtiyaç duyulan sayfalarda kullanmak için ekleyebilirsiniz) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+  <!-- Chart.js Kütüphanesi -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Chart.js Treemap Plugin -->
+<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-treemap@1.0.0/dist/chartjs-chart-treemap.min.js"></script>
+  {% endblock %}
+
+  {% block extra_css %}
+  <!-- Sayfa bazlı ek CSS dosyaları buraya eklenebilir -->
+  {% endblock %}
+</head>
+
+<!-- Basit siyah arka plan -->
+<body class="d-flex flex-column min-vh-100 text-white animate__animated animate__fadeIn" style="background-color: #000;">
+
+  <!-- Navbar (Düz siyah) -->
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #000; border-bottom: 1px solid #444;">
+    <div class="container-fluid">
+      <!-- Hamburger Menü Butonu (Offcanvas) -->
+      <button class="btn btn-dark me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <!-- Marka (Phishing Reports) -->
+      <a class="navbar-brand fw-bold" href="{{ url_for('index') }}" style="color: #fff;">
+        <i class="fas fa-user-secret me-2"></i>PhishViz
+      </a>
+      
+      <!-- Navbar Toggler -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDirectLinks" aria-controls="navbarDirectLinks" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Sağdaki Linkler (isteğe bağlı) -->
+      <div class="collapse navbar-collapse" id="navbarDirectLinks">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <!-- Örnek boş linkler -->
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('new_customer') }}">
+              <!--<i class="fas fa-user-plus me-1"></i> Yeni Müşteri Ekle-->
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <!--<i class="fas fa-info-circle me-1"></i> Hakkında-->
+            </a>
+          </li>
+          <!-- Diğer bağlantılar -->
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Offcanvas Menü -->
+  <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menü</h5>
+      <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+        <li class="nav-item">
+          <a class="nav-link active animate-on-scroll" aria-current="page" href="{{ url_for('index') }}">
+            <i class="fas fa-home me-2"></i> Anasayfa
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link animate-on-scroll" href="{{ url_for('new_customer') }}">
+            <i class="fas fa-user-plus me-2"></i> Yeni Müşteri Ekle
+          </a>
+        </li>
+        <!-- Daha fazla menü öğesi -->
+        <li class="nav-item">
+          <a class="nav-link animate-on-scroll" href="#">
+            <i class="fas fa-info-circle me-2"></i> Hakkında
+          </a>
+        </li> 
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('docs') }}">
+            <i class="fas fa-book me-1"></i> Dökümantasyon
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('templates_page') }}">
+            <i class="fas fa-copy me-1"></i> Phishing Şablonları
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('example_data') }}">
+            <i class="fas fa-file-excel me-1"></i> Örnek Veri (Excel)
+          </a>
+        </li>       
+      </ul>
+    </div>
+  </div>
+
+  <!-- Ana İçerik -->
+  <main class="flex-fill container py-4">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, msg in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show animate__animated animate__fadeIn" role="alert">
+            {{ msg }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer (Düz siyah) -->
+  <footer class="footer text-white py-3 mt-auto" style="background-color: #000; border-top: 1px solid #444;">
+    <div class="container text-center">
+      <p class="m-0" style="font-size:1rem;">
+        &copy; {{ current_year }} PhishViz. Tüm Hakları Saklıdır.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Modal Örneği -->
+  <div id="exampleModal" class="modal-content" style="display: none;">
+    <span class="modal-close">&times;</span>
+    <h2>Hakkında</h2>
+    <p>Bu uygulama Sosyal Mühendislik Süreçlerinde Raporlama Kısmı İçin geliştirilmiştir.</p>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- MarkerCluster JS -->
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <!-- Lightbox JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+  <!-- Custom JS -->
+  <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+
+  {% block extra_scripts %}
+  <!-- Dashboard gibi sayfalarda ek scriptler için kullanılır -->
+  {% endblock %}
+</body>
+</html>

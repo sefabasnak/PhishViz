@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}Dökümantasyon{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4"><i class="fas fa-book text-info"></i> Dökümantasyon</h1>
+
+    <!-- Proje Hakkında -->
+    <section class="mb-5">
+        <h2 class="text-info"><i class="fas fa-info-circle"></i> Proje Hakkında</h2>
+        <p>
+            <strong>Sosyal Mühendislik Raporlama</strong> uygulaması, güvenlik testlerinde kullanılan phishing şablonlarının oluşturulmasını, düzenlenmesini ve raporlanmasını kolaylaştırmak için geliştirilmiştir. 
+            Kullanıcılar, müşteri bilgilerini ekleyebilir, hazır şablonlar üzerinde çalışabilir ve verileri Excel formatında indirebilir.
+        </p>
+    </section>
+
+    <!-- Özellikler -->
+    <section class="mb-5">
+        <h2 class="text-info"><i class="fas fa-list-alt"></i> Özellikler</h2>
+        <ul class="list-unstyled">
+            <li><i class="fas fa-plus-circle text-success"></i> Phishing şablonlarını ekleme, düzenleme ve silme.</li>
+            <li><i class="fas fa-file-excel text-primary"></i> Excel formatında örnek veri oluşturma ve indirme.</li>
+            <li><i class="fas fa-edit text-warning"></i> CKEditor ile dinamik şablon düzenleme.</li>
+            <li><i class="fas fa-eye text-info"></i> Tablo verilerini koyu modda önizleme.</li>
+            <li><i class="fas fa-users text-secondary"></i> Müşteri bilgilerini girme ve saklama.</li>
+        </ul>
+    </section>
+
+    <!-- Nasıl Kullanılır -->
+    <section class="mb-5">
+        <h2 class="text-info"><i class="fas fa-tools"></i> Nasıl Kullanılır?</h2>
+        <ol class="list-group list-group-numbered">
+            <li class="list-group-item bg-dark text-white">
+                <strong>Phishing Şablonları Yönetimi:</strong>
+                <ul>
+                    <li><a href="{{ url_for('templates_page') }}" class="text-info"><i class="fas fa-copy"></i> Phishing Şablonları</a> sayfasına gidin.</li>
+                    <li>"Yeni Şablon Ekle" butonunu kullanarak şablon oluşturun.</li>
+                    <li>Mevcut şablonları düzenleyin veya silin.</li>
+                </ul>
+            </li>
+            <li class="list-group-item bg-dark text-white">
+                <strong>Örnek Veri:</strong>
+                <ul>
+                    <li><a href="{{ url_for('example_data') }}" class="text-info"><i class="fas fa-table"></i> Örnek Veri</a> sayfasında veriyi tablo olarak görüntüleyin.</li>
+                    <li>Excel dosyasını indirmek için "İndir" bağlantısını kullanın.</li>
+                </ul>
+            </li>
+            <li class="list-group-item bg-dark text-white">
+                <strong>Dökümantasyon:</strong>
+                <ul>
+                    <li>Projenin çalışma mantığını anlamak için bu sayfayı inceleyin.</li>
+                </ul>
+            </li>
+        </ol>
+    </section>
+
+    <!-- Teknik Detaylar -->
+    <section class="mb-5">
+        <h2 class="text-info"><i class="fas fa-cogs"></i> Teknik Detaylar</h2>
+        <ul class="list-unstyled">
+            <li><i class="fas fa-code"></i> Python 3.13 ve Flask framework ile geliştirilmiştir.</li>
+            <li><i class="fas fa-edit"></i> CKEditor entegrasyonu ile şablon düzenleme sağlanmıştır.</li>
+            <li><i class="fas fa-file-excel"></i> Pandas ve openpyxl kütüphaneleriyle Excel desteği.</li>
+            <li><i class="fas fa-laptop-code"></i> Modern ve responsive arayüz için Bootstrap kullanılmıştır.</li>
+        </ul>
+    </section>
+
+    <!-- Destek -->
+    <section class="mb-5">
+        <h2 class="text-info"><i class="fas fa-headset"></i> Destek</h2>
+        <p>Eğer bir sorun yaşarsanız, aşağıdaki kanallardan yardım alabilirsiniz:</p>
+        <ul class="list-unstyled">
+            <li><i class="fas fa-bug text-danger"></i> GitHub Sorun Takip Sistemi: 
+                <a href="https://github.com/your-repo/issues" class="text-info" target="_blank">Buraya Tıklayın</a></li>
+            <li><i class="fas fa-envelope text-warning"></i> E-posta: 
+                <a href="mailto:support@example.com" class="text-info">support@example.com</a></li>
+        </ul>
+    </section>
+</div>
+{% endblock %}

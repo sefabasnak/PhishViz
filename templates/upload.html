@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}{{ customer_name }} - Dosya Yükleme{% endblock %}
+
+{% block content %}
+<h1 class="text-center">{{ customer_name }} - Dosya Yükleme</h1>
+
+{% if customer.scenario or customer.domain %}
+  <p class="mb-3">
+    {% if customer.scenario %}
+      <strong>Senaryo:</strong> {{ customer.scenario }}<br>
+    {% endif %}
+    {% if customer.domain %}
+      <strong>Alan Adı:</strong> {{ customer.domain }}
+    {% endif %}
+  </p>
+{% endif %}
+
+<form method="POST" enctype="multipart/form-data">
+  <div class="mb-3">
+    <label for="file" class="form-label">Excel Dosyası:</label>
+    <input type="file" class="form-control" id="file" name="file" required>
+  </div>
+  <button type="submit" class="btn btn-primary w-100">Yükle</button>
+</form>
+{% endblock %}

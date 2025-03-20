@@ -1,3 +1,7 @@
+Aşağıda, projenizin profesyonel ve düzenli bir README.md dosyasının örneğini bulabilirsiniz. Bu dosya, projenin amacını, özelliklerini, yükleme adımlarını, kullanım talimatlarını (özellikle report.py’nin kullanımı) ve videolu dökümantasyon bağlantısını içermektedir.
+
+⸻
+
 
 
 # PhishViz
@@ -6,9 +10,9 @@
 PhishViz, GoPhish sonuçlarını grafiksel sonuçlara çevirip raporlamaya yardımcı olmak için geliştirilmiş bir sosyal mühendislik raporlama uygulamasıdır. Bu proje, güvenlik testlerinde kullanılan phishing şablonlarının oluşturulmasını, düzenlenmesini ve raporlanmasını kolaylaştırmayı amaçlar. Kullanıcılar, müşteri bilgilerini ekleyebilir, hazır şablonlar üzerinde çalışabilir ve verileri Excel formatında indirebilir.
 
 **Önemli Not:**  
-report.py içerisinde 7. satırı güncellemeniz gerekmektedir 
-GoPhish API URL’si projenizde aşağıdaki gibi kullanılmaktadır:  
-`API_URL = "https://gophish-server:3333/api/campaigns/?api_key=api_key"`
+`report.py` içerisindeki 7. satırda bulunan API URL’sini projenize uygun şekilde güncellemeniz gerekmektedir. Örnek kullanım:
+
+API_URL = “https://gophish-server:3333/api/campaigns/?api_key=api_key”
 
 ## Özellikler
 - **Phishing Şablonları Yönetimi:**  
@@ -27,26 +31,29 @@ GoPhish API URL’si projenizde aşağıdaki gibi kullanılmaktadır:
   - GoPhish sonuçlarının grafiksel çıktılarıyla raporlanması (Matplotlib ile).
 
 ## Nasıl Yüklenir?
-	1. **Sanal Ortam Oluşturma:**
-   	
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate    # Linux/MacOS için
-   # veya
-   venv\Scripts\activate       # Windows için
 
-	2.	Gereksinimlerin Yüklenmesi:
-	Projeyi çalıştırmak için gerekli bağımlılıklar requirements.txt dosyasında belirtilmiştir. Aşağıdaki komut ile bağımlılıkları yükleyin:
+### 1. Sanal Ortam Oluşturma
+Projeyi izole bir ortamda çalıştırmak için aşağıdaki adımları izleyin:
 
-	pip install -r requirements.txt
+```bash
+python3 -m venv venv
+source venv/bin/activate    # Linux/MacOS için
+# veya
+venv\Scripts\activate       # Windows için
 
+2. Gereksinimlerin Yüklenmesi
 
-	3.	Uygulamayı Başlatma:
-	Uygulamanın ana arayüzünü başlatmak için:
+Projeyi çalıştırmak için gerekli bağımlılıklar requirements.txt dosyasında belirtilmiştir. Aşağıdaki komutu kullanarak tüm bağımlılıkları yükleyin:
 
-	python3 app.py
+pip install -r requirements.txt
 
+3. Uygulamayı Başlatma
+
+Ana arayüzü çalıştırmak için:
+
+python3 app.py
 ```
+
 
 Nasıl Kullanılır?
 
@@ -61,7 +68,7 @@ Phishing Şablonları Yönetimi
 
 GoPhish Sonuçlarını Raporlama (report.py)
 
-report.py aracı, GoPhish API’sinden kampanya verilerini çekerek kullanıcıya mevcut kampanyaların ID ve isimlerini listeler. Kullanıcı, listeden raporlamak istediği kampanya ID’sini seçer. Seçilen kampanyanın timeline verileri aşağıdaki sütunlara göre Excel dosyasına aktarılır:
+report.py aracı, GoPhish API’sinden kampanya verilerini çekerek mevcut kampanyaların ID ve isimlerini listeler. Kullanıcı, listeden raporlamak istediği kampanya ID’sini seçer. Seçilen kampanyanın timeline verileri, aşağıdaki sütunlar halinde Excel raporuna aktarılır:
 	•	Mail Gönderilen Kişiler
 	•	Maili Okuyan Kişiler
 	•	Mail Okuma Tarih ve Saati
@@ -70,33 +77,45 @@ report.py aracı, GoPhish API’sinden kampanya verilerini çekerek kullanıcıy
 	•	Kaç Kere Çalıştırıldığı
 
 Kullanım Adımları:
-	1.	Terminalde sanal ortamınızı aktive edin ve ardından:
+	1.	Terminalde sanal ortamınızı aktive edin.
+	2.	Aşağıdaki komutu çalıştırın:
 
 python3 report.py
 
 
-	2.	Script çalıştığında ekrana mevcut kampanyaların ID ve isimleri listelenecektir. Örneğin:
+	3.	Script çalıştığında ekrana mevcut kampanyaların ID ve isimleri listelenecektir. Örneğin:
 
 Mevcut kampanyalar:
-ID: 15 - İsim: Copy of test
-ID: 17 - İsim: Test3
-ID: 18 - İsim: Copy of Test3
+ID: 15 - İsim: Test1
+ID: 17 - İsim: Test2
+ID: 18 - İsim: Test3
 ...
 
 
-	3.	Sizden raporlamak istediğiniz kampanya ID’sini girmeniz istenecek. İlgili kampanya seçildikten sonra, rapor dosyası Campaign_Report_ID_<secilen_id>.xlsx olarak oluşturulacaktır. Konsol çıktısında da hangi kampanya ID’sinin işlendiği belirtilecektir.
+	4.	Raporlamak istediğiniz kampanya ID’sini girin. Seçilen kampanyanın timeline verileri, Campaign_Report_ID_<secilen_id>.xlsx dosyası olarak oluşturulacaktır. Konsol çıktısında hangi kampanya ID’sinin işlendiği belirtilecektir.
 
-Videolu Dökümantasyon
+Kullanım Videosu
 
-Proje ve report.py kullanımına dair detaylı açıklamaları içeren videoyu GitHub deposunda izleyebilirsiniz:
+Proje kullanımına dair detaylı açıklamaları içeren videoyu aşağıdaki bağlantıdan izleyebilirsiniz:
+
+https://www.linkedin.com/feed/update/urn:li:activity:7289951322726916096/
+
 PhishViz Örnek Videosu
 
 Teknik Detaylar
 	•	Dil & Framework: Python 3.13, Flask
-	•	Veritabanı: Flask-SQLAlchemy (opsiyonel kullanım)
-	•	Excel Desteği: Pandas, xlsxwriter (ve/veya openpyxl)
+	•	Veritabanı: Flask-SQLAlchemy 
+	•	Excel Desteği: Pandas, xlsxwriter 
 	•	Şablon Düzenleme: CKEditor entegrasyonu
 	•	Grafik: Matplotlib (grafiksel raporlama için)
 	•	Modern & Responsive Arayüz: Bootstrap
 
+Destek
+
+Eğer bir sorun yaşarsanız, aşağıdaki kanallardan yardım alabilirsiniz:
+	•	Twitter: sefabasnak
+	•	LinkedIn: linkedin/in/sefabasnak
+
 © 2025 PhishViz. Tüm Hakları Saklıdır.
+
+---

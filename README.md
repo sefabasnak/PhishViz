@@ -1,7 +1,3 @@
-Aşağıda, projenizin profesyonel ve düzenli bir README.md dosyasının örneğini bulabilirsiniz. Bu dosya, projenin amacını, özelliklerini, yükleme adımlarını, kullanım talimatlarını (özellikle report.py’nin kullanımı) ve videolu dökümantasyon bağlantısını içermektedir.
-
-⸻
-
 
 
 # PhishViz
@@ -33,7 +29,6 @@ API_URL = “https://gophish-server:3333/api/campaigns/?api_key=api_key”
 ## Nasıl Yüklenir?
 
 ### 1. Sanal Ortam Oluşturma
-Projeyi izole bir ortamda çalıştırmak için aşağıdaki adımları izleyin:
 
 ```bash
 python3 -m venv venv
@@ -77,8 +72,7 @@ report.py aracı, GoPhish API’sinden kampanya verilerini çekerek mevcut kampa
 	•	Kaç Kere Çalıştırıldığı
 
 Kullanım Adımları:
-	1.	Terminalde sanal ortamınızı aktive edin.
-	2.	Aşağıdaki komutu çalıştırın:
+	1.	Aşağıdaki komutu çalıştırın:
 
 python3 report.py
 
@@ -113,9 +107,7 @@ Teknik Detaylar
 Destek
 
 Eğer bir sorun yaşarsanız, aşağıdaki kanallardan yardım alabilirsiniz:
-	•	Twitter: sefabasnak
-	•	LinkedIn: linkedin/in/sefabasnak
+- **Twitter:** [sefabasnak](https://twitter.com/sefabasnak)
+- **LinkedIn:** [linkedin/in/sefabasnak](https://www.linkedin.com/in/sefabasnak)
 
 © 2025 PhishViz. Tüm Hakları Saklıdır.
-
----

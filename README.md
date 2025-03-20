@@ -1,8 +1,14 @@
 
+
 # PhishViz
 
 ## Proje Hakkında
-PhishViz, GoPhish sonuçlarını grafiksel sonuçlara çevirip raporlamaya yardımcı olmak için geliştirilmiş bir sosyal mühendislik raporlama uygulamasıdır. Bu proje, güvenlik testlerinde kullanılan phishing şablonlarının oluşturulmasını, düzenlenmesini ve raporlanmasını kolaylaştırmayı amaçlar.
+PhishViz, GoPhish sonuçlarını grafiksel sonuçlara çevirip raporlamaya yardımcı olmak için geliştirilmiş bir sosyal mühendislik raporlama uygulamasıdır. Bu proje, güvenlik testlerinde kullanılan phishing şablonlarının oluşturulmasını, düzenlenmesini ve raporlanmasını kolaylaştırmayı amaçlar. Kullanıcılar, müşteri bilgilerini ekleyebilir, hazır şablonlar üzerinde çalışabilir ve verileri Excel formatında indirebilir.
+
+**Önemli Not:**  
+report.py içerisinde 7. satırı güncellemeniz gerekmektedir 
+GoPhish API URL’si projenizde aşağıdaki gibi kullanılmaktadır:  
+`API_URL = "https://gophish-server:3333/api/campaigns/?api_key=api_key"`
 
 ## Özellikler
 - **Phishing Şablonları Yönetimi:**  
@@ -21,22 +27,26 @@ PhishViz, GoPhish sonuçlarını grafiksel sonuçlara çevirip raporlamaya yard�
   - GoPhish sonuçlarının grafiksel çıktılarıyla raporlanması (Matplotlib ile).
 
 ## Nasıl Yüklenir?
-1. **Sanal Ortam Oluşturma:**
-   
+	1. **Sanal Ortam Oluşturma:**
+   	
    ```bash
    python3 -m venv venv
    source venv/bin/activate    # Linux/MacOS için
    # veya
    venv\Scripts\activate       # Windows için
-  
 
 	2.	Gereksinimlerin Yüklenmesi:
-Projeyi çalıştırmak için gerekli bağımlılıklar, requirements.txt dosyasında belirtilmiştir. Aşağıdaki komut ile bağımlılıkları yükleyin:
+	Projeyi çalıştırmak için gerekli bağımlılıklar requirements.txt dosyasında belirtilmiştir. Aşağıdaki komut ile bağımlılıkları yükleyin:
 
-pip install -r requirements.txt
+	pip install -r requirements.txt
 
-python3 app.py
 
+	3.	Uygulamayı Başlatma:
+	Uygulamanın ana arayüzünü başlatmak için:
+
+	python3 app.py
+
+```
 
 Nasıl Kullanılır?
 
@@ -51,7 +61,7 @@ Phishing Şablonları Yönetimi
 
 GoPhish Sonuçlarını Raporlama (report.py)
 
-report.py aracı, GoPhish API’sinden kampanya verilerini çeker ve kullanıcıya mevcut kampanyaların ID ve isimlerini gösterir. Ardından, kullanıcı raporlamak istediği kampanya ID’sini seçer. Seçilen kampanyanın timeline verileri aşağıdaki sütunlara göre Excel dosyasına aktarılır:
+report.py aracı, GoPhish API’sinden kampanya verilerini çekerek kullanıcıya mevcut kampanyaların ID ve isimlerini listeler. Kullanıcı, listeden raporlamak istediği kampanya ID’sini seçer. Seçilen kampanyanın timeline verileri aşağıdaki sütunlara göre Excel dosyasına aktarılır:
 	•	Mail Gönderilen Kişiler
 	•	Maili Okuyan Kişiler
 	•	Mail Okuma Tarih ve Saati
@@ -59,22 +69,27 @@ report.py aracı, GoPhish API’sinden kampanya verilerini çeker ve kullanıcı
 	•	Veri İhlali Yapan Kişiler
 	•	Kaç Kere Çalıştırıldığı
 
-Kullanım Örneği:
+Kullanım Adımları:
+	1.	Terminalde sanal ortamınızı aktive edin ve ardından:
 
 python3 report.py
 
 
-	2.	Script çalıştığında, ekrana mevcut kampanyaların ID ve isimleri listelenecektir.
-
+	2.	Script çalıştığında ekrana mevcut kampanyaların ID ve isimleri listelenecektir. Örneğin:
 
 Mevcut kampanyalar:
-ID: 15 - İsim: Test1
-ID: 17 - İsim: Test2
-ID: 18 - İsim: Test3
+ID: 15 - İsim: Copy of test
+ID: 17 - İsim: Test3
+ID: 18 - İsim: Copy of Test3
 ...
 
 
 	3.	Sizden raporlamak istediğiniz kampanya ID’sini girmeniz istenecek. İlgili kampanya seçildikten sonra, rapor dosyası Campaign_Report_ID_<secilen_id>.xlsx olarak oluşturulacaktır. Konsol çıktısında da hangi kampanya ID’sinin işlendiği belirtilecektir.
+
+Videolu Dökümantasyon
+
+Proje ve report.py kullanımına dair detaylı açıklamaları içeren videoyu GitHub deposunda izleyebilirsiniz:
+PhishViz Örnek Videosu
 
 Teknik Detaylar
 	•	Dil & Framework: Python 3.13, Flask
@@ -83,5 +98,11 @@ Teknik Detaylar
 	•	Şablon Düzenleme: CKEditor entegrasyonu
 	•	Grafik: Matplotlib (grafiksel raporlama için)
 	•	Modern & Responsive Arayüz: Bootstrap
+
+Destek
+
+Eğer bir sorun yaşarsanız, aşağıdaki kanallardan yardım alabilirsiniz:
+	•	GitHub Sorun Takip Sistemi: Buraya Tıklayın
+	•	E-posta: support@example.com
 
 © 2025 PhishViz. Tüm Hakları Saklıdır.

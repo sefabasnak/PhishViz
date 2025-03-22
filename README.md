@@ -1,5 +1,7 @@
 PhishViz
 
+GoPhish Reporting Tool
+
 About the Project
 
 PhishViz is a social engineering reporting application developed to convert GoPhish results into graphical outputs and assist with reporting. This project aims to facilitate the creation, editing, and reporting of phishing templates used in security tests. Users can add customer information, work on pre-made templates, and download the data in Excel format.

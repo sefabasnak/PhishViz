@@ -1,113 +1,110 @@
+PhishViz
 
+About the Project
 
-# PhishViz
+PhishViz is a social engineering reporting application developed to convert GoPhish results into graphical outputs and assist with reporting. This project aims to facilitate the creation, editing, and reporting of phishing templates used in security tests. Users can add customer information, work on pre-made templates, and download the data in Excel format.
 
-## Proje Hakkında
-PhishViz, GoPhish sonuçlarını grafiksel sonuçlara çevirip raporlamaya yardımcı olmak için geliştirilmiş bir sosyal mühendislik raporlama uygulamasıdır. Bu proje, güvenlik testlerinde kullanılan phishing şablonlarının oluşturulmasını, düzenlenmesini ve raporlanmasını kolaylaştırmayı amaçlar. Kullanıcılar, müşteri bilgilerini ekleyebilir, hazır şablonlar üzerinde çalışabilir ve verileri Excel formatında indirebilir.
+Important Note:
+You need to update the API URL on line 7 in report.py according to your project. Example usage:
 
-**Önemli Not:**  
-`report.py` içerisindeki 7. satırda bulunan API URL’sini projenize uygun şekilde güncellemeniz gerekmektedir. Örnek kullanım:
+API_URL = "https://gophish-server:3333/api/campaigns/?api_key=api_key"
 
-API_URL = “https://gophish-server:3333/api/campaigns/?api_key=api_key”
+Features
+	•	Phishing Template Management:
+	•	Add, edit, and delete phishing templates.
+	•	Dynamic template editing with CKEditor.
+	•	Sample Data:
+	•	Display the generated data in a table.
+	•	Create and download sample data in Excel format.
+	•	Customer Information:
+	•	Enter and store customer information.
+	•	GoPhish Results Reporting:
+	•	Retrieve campaign data from the GoPhish API.
+	•	Export campaign timeline data into an Excel report with specified columns.
+	•	Indicate the processed campaign ID in the report file name and console output.
+	•	Graphical Reporting:
+	•	Reporting with graphical outputs of GoPhish results (using Matplotlib).
 
-## Özellikler
-- **Phishing Şablonları Yönetimi:**  
-  - Phishing şablonlarını ekleme, düzenleme ve silme.
-  - CKEditor ile dinamik şablon düzenleme.
-- **Örnek Veri:**  
-  - Oluşturulan veriyi tablo olarak görüntüleme.
-  - Excel formatında örnek veri oluşturma ve indirme.
-- **Müşteri Bilgileri:**  
-  - Müşteri bilgilerini girme ve saklama.
-- **GoPhish Sonuçları Raporlama:**  
-  - GoPhish API'sinden kampanya verilerini çekme.
-  - Kampanya timeline verilerini belirli sütunlar halinde Excel raporuna aktarma.
-  - Rapor dosyası adında ve konsol çıktısında hangi kampanya ID'sinin işlendiğini belirtme.
-- **Grafiksel Raporlama:**  
-  - GoPhish sonuçlarının grafiksel çıktılarıyla raporlanması (Matplotlib ile).
+How to Install
 
-## Nasıl Yüklenir?
+1. Create a Virtual Environment
 
-### 1. Sanal Ortam Oluşturma
-
-```bash
 python3 -m venv venv
-source venv/bin/activate    # Linux/MacOS için
-# veya
-venv\Scripts\activate       # Windows için
+source venv/bin/activate    # For Linux/MacOS
+# or
+venv\Scripts\activate       # For Windows
 
-2. Gereksinimlerin Yüklenmesi
+2. Install Dependencies
 
-Projeyi çalıştırmak için gerekli bağımlılıklar requirements.txt dosyasında belirtilmiştir. Aşağıdaki komutu kullanarak tüm bağımlılıkları yükleyin:
+All dependencies required to run the project are specified in the requirements.txt file. Install all dependencies using the following command:
 
 pip install -r requirements.txt
 
-3. Uygulamayı Başlatma
+3. Start the Application
 
-Ana arayüzü çalıştırmak için:
+To run the main interface:
 
 python3 app.py
-```
 
+How to Use
 
-Nasıl Kullanılır?
+Phishing Template Management
+	1.	Log in to the PhishViz interface and navigate to the Phishing Templates page.
+	2.	Use the “Add New Template” button to create a template.
+	3.	You can edit existing templates or delete them.
 
-Phishing Şablonları Yönetimi
-	1.	PhishViz arayüzüne giriş yapın ve Phishing Şablonları sayfasına gidin.
-	2.	“Yeni Şablon Ekle” butonunu kullanarak şablon oluşturun.
-	3.	Mevcut şablonlar üzerinde düzenleme yapabilir veya şablonları silebilirsiniz.
+Sample Data
+	1.	View the data as a table on the Sample Data page.
+	2.	Use the “Download” link to download the Excel file.
 
-Örnek Veri
-	1.	Örnek Veri sayfasında verileri tablo olarak görüntüleyin.
-	2.	Excel dosyasını indirmek için “İndir” bağlantısını kullanın.
+Reporting GoPhish Results (report.py)
 
-GoPhish Sonuçlarını Raporlama (report.py)
+The report.py tool retrieves campaign data from the GoPhish API and lists the IDs and names of existing campaigns. The user selects the campaign ID they wish to report from the list. The timeline data of the selected campaign is then exported to an Excel report with the following columns:
+	•	People who received the email
+	•	People who read the email
+	•	Email reading date and time
+	•	People who clicked the link
+	•	People who had a data breach
+	•	Number of times executed
 
-report.py aracı, GoPhish API’sinden kampanya verilerini çekerek mevcut kampanyaların ID ve isimlerini listeler. Kullanıcı, listeden raporlamak istediği kampanya ID’sini seçer. Seçilen kampanyanın timeline verileri, aşağıdaki sütunlar halinde Excel raporuna aktarılır:
-	•	Mail Gönderilen Kişiler
-	•	Maili Okuyan Kişiler
-	•	Mail Okuma Tarih ve Saati
-	•	Linke Tıklayan Kişiler
-	•	Veri İhlali Yapan Kişiler
-	•	Kaç Kere Çalıştırıldığı
-
-Kullanım Adımları:
-	1.	Aşağıdaki komutu çalıştırın:
+Steps for Use:
+	1.	Run the following command:
 
 python3 report.py
 
 
-	3.	Script çalıştığında ekrana mevcut kampanyaların ID ve isimleri listelenecektir. Örneğin:
+	2.	When the script runs, it will list the IDs and names of the current campaigns on the screen. For example:
 
-Mevcut kampanyalar:
-ID: 15 - İsim: Test1
-ID: 17 - İsim: Test2
-ID: 18 - İsim: Test3
+Current campaigns:
+ID: 15 - Name: Test1
+ID: 17 - Name: Test2
+ID: 18 - Name: Test3
 ...
 
 
-	4.	Raporlamak istediğiniz kampanya ID’sini girin. Seçilen kampanyanın timeline verileri, Campaign_Report_ID_<secilen_id>.xlsx dosyası olarak oluşturulacaktır. Konsol çıktısında hangi kampanya ID’sinin işlendiği belirtilecektir.
+	3.	Enter the campaign ID you wish to report. The timeline data of the selected campaign will be generated as a file named Campaign_Report_ID_<selected_id>.xlsx. The console output will indicate which campaign ID was processed.
 
-Kullanım Videosu
+Usage Video
 
-Proje kullanımına dair detaylı açıklamaları içeren videoyu aşağıdaki bağlantıdan izleyebilirsiniz:
+You can watch the video with detailed explanations on how to use the project via the following link:
 
 https://www.linkedin.com/feed/update/urn:li:activity:7289951322726916096/
 
-PhishViz Örnek Videosu
+PhishViz Demo Video
 
-Teknik Detaylar
-	•	Dil & Framework: Python 3.13, Flask
-	•	Veritabanı: Flask-SQLAlchemy 
-	•	Excel Desteği: Pandas, xlsxwriter 
-	•	Şablon Düzenleme: CKEditor entegrasyonu
-	•	Grafik: Matplotlib (grafiksel raporlama için)
-	•	Modern & Responsive Arayüz: Bootstrap
+Technical Details
+	•	Language & Framework: Python 3.13, Flask
+	•	Database: Flask-SQLAlchemy
+	•	Excel Support: Pandas, xlsxwriter
+	•	Template Editing: CKEditor integration
+	•	Graphing: Matplotlib (for graphical reporting)
+	•	Modern & Responsive Interface: Bootstrap
 
-Destek
+Support
 
-Eğer bir sorun yaşarsanız, aşağıdaki kanallardan yardım alabilirsiniz:
+If you encounter any issues, you can get help through the following channels:
+
 - **Twitter:** [sefabasnak](https://twitter.com/sefabasnak)
 - **LinkedIn:** [linkedin/in/sefabasnak](https://www.linkedin.com/in/sefabasnak)
 
-© 2025 PhishViz. Tüm Hakları Saklıdır.
+© 2025 PhishViz. All Rights Reserved.
